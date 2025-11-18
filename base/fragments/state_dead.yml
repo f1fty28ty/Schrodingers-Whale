@@ -1,6 +1,0 @@
-environment:
-- QUANTUM_STATE=DEAD
-profiles:
-- collapsed
-labels:
-- quantum.entangled=true
