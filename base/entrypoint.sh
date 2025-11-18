@@ -24,7 +24,7 @@ Reconstruct all fragments to determine the whale's true nature.
 🐋 Quantum Fragment #1 detected in temporal stream:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-CiAgc3RhdGUtYWxpdmU6CiAgICBpbWFnZTogc2Nocm9kaW5nZXJzLXdoYWxlOmFsaXZl
+ICBzdGF0ZS1hbGl2ZToKICAgIGltYWdlOiBmMWZ0eTI4dHkvc2Nocm9kaW5nZXJzLXdoYWxlOmFsaXZl
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

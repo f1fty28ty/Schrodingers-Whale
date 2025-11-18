@@ -1,7 +1,19 @@
 # Schrödinger's Whale - CTF Challenge
 
+## Prerequisites
+- Docker
+- Docker Compose
+
 ## Setup
+Start the quantum experiment:
+```bash
 docker-compose up -d
+```
+
+Check that the container is running:
+```bash
+docker ps
+```
 
 ## Objective
 The whale exists in quantum superposition. Your goal is to:
@@ -16,10 +28,56 @@ The whale exists in quantum superposition. Your goal is to:
 - Multiple observation methods reveal different information
 - Combine all fragments to reconstruct reality
 
+## Available Observation Methods
+
+Docker provides several ways to externally observe containers without entering them:
+
+### Basic Observations
+- `docker logs <container>` - View container output (temporal observation)
+- `docker inspect <container>` - View container metadata and configuration
+- `docker ps` - List running containers
+
+### Advanced Observations
+- `docker history <image>` - View image layer history (archaeological observation)
+- `docker save <image> -o file.tar` - Export image to tarball for analysis
+- `dive <image>` - Explore image layers interactively (recommended for finding hidden files)
+
+### Installing dive (Image Layer Explorer)
+**macOS:**
+```bash
+brew install dive
+```
+
+**Linux (Fedora/RHEL):**
+```bash
+sudo dnf install dive
+```
+
+**Linux (Debian/Ubuntu):**
+```bash
+sudo apt install dive
+```
+
+**Other systems:**
+See [dive releases](https://github.com/wagoodman/dive/releases) for pre-built binaries
+
+### Useful Inspection Filters
+- `docker inspect <container> | grep quantum` - Search for specific metadata
+- `docker inspect <container> --format='{{.Config.Env}}'` - View environment variables
+- `docker inspect <container> --format='{{.Config.Labels}}'` - View labels
+
 ## Hints
-- Think like a quantum physicist - how do you observe without interfering?
-- Docker has many ways to inspect containers externally
-- Some information exists in places you might not expect
-- The past (layers) remembers what the present has forgotten
+- Start with `docker logs` to see what the container is telling you
+- Look for base64 encoded strings - they often contain hidden information
+- Image layers remember what the present has forgotten
+- Some fragments are in metadata (labels, environment variables)
+- Each observation method reveals different aspects of the quantum state
+- You'll need to combine information from multiple sources
+
+## Decoding Base64
+If you find base64 encoded strings, decode them with:
+```bash
+echo "BASE64_STRING_HERE" | base64 -d
+```
 
 Good luck, observer.
