@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  schrodingers-whale:
+    image: yourname/schrodingers-whale:latest
+    container_name: schrodingers-whale
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - "quantum.state=superposition"
