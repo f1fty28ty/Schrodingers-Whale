@@ -28,6 +28,9 @@ ICBzdGF0ZS1hbGl2ZToKICAgIGltYWdlOiBmMWZ0eTI4dHkvc2Nocm9kaW5nZXJzLXdoYWxlOmFsaXZl
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+⚛️  Some fragments require decryption keys...
+⚛️  Observer credentials: quantum_observer_2025
+
 🔬 Begin your observations...
 
 EOF
