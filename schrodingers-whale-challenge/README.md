@@ -8,6 +8,10 @@
 Start the quantum experiment:
 ```bash
 docker-compose up -d
+
+#later this
+
+docker-compose --profile collapsed up -d
 ```
 
 Check that the container is running:
