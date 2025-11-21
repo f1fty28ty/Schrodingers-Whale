@@ -1,39 +1,97 @@
 #!/usr/bin/env bash
-# Bash equivalent of the Python SHA256 XOR encryption script
+# SHA256 XOR encryption for Docker label (with base64 layer)
 
-# Key from logs
-key="quantum_observer_2025"
+# Key/salt from logs
+KEY="quantum_observer_2025"
 
-# Fragment to encrypt (base64 of the YAML)
-fragment="ICBzdGF0ZS1kZWFkOgogICAgaW1hZ2U6IGYxZnR5Mjh0eS9zY2hyb2RpbmdlcnMtd2hhbGU6ZGVhZA=="
+# Fragment to encrypt (the actual YAML we want to hide)
+FRAGMENT="    labels:
+      - quantum.entangled=true"
 
-# Compute SHA256 of key (raw binary)
-key_hash=$(echo -n "$key" | openssl dgst -sha256 -binary)
+echo "=== Two-Layer Encryption Process ==="
+echo "Key: $KEY"
+echo "Fragment to encrypt:"
+echo "$FRAGMENT"
+echo ""
 
-# Convert fragment to bytes
-fragment_bytes=$(echo -n "$fragment" | xxd -p -c 256)
+# Step 1: Base64 encode the fragment
+FRAGMENT_B64=$(echo -n "$FRAGMENT" | base64)
+echo "Step 1 - Base64 encoded: $FRAGMENT_B64"
+echo ""
 
-# Function to XOR two byte streams (hex strings)
-xor_hex() {
-  local data_hex="$1"
-  local key_hex="$2"
-  local result=""
-  local data_len=$(( ${#data_hex} / 2 ))
-  local key_len=$(( ${#key_hex} / 2 ))
+# Step 2: Compute SHA256 hash of the key
+KEY_HASH=$(echo -n "$KEY" | sha256sum | cut -d' ' -f1)
+echo "Step 2 - SHA256 of key: $KEY_HASH"
+echo ""
 
-  for ((i=0; i<data_len; i++)); do
-    local data_byte=$((16#${data_hex:i*2:2}))
-    local key_byte=$((16#${key_hex:$(( (i % key_len)*2 )):2}))
-    printf -v result "%s%02x" "$result" $((data_byte ^ key_byte))
-  done
-  echo "$result"
-}
+# Step 3: Convert base64 string to hex
+FRAGMENT_HEX=$(echo -n "$FRAGMENT_B64" | xxd -p | tr -d '\n')
+echo "Step 3 - Base64 as hex: $FRAGMENT_HEX"
+echo ""
 
-# Convert key_hash to hex
-key_hash_hex=$(echo -n "$key_hash" | xxd -p | tr -d '\n')
+# Step 4: XOR the base64 string with the key hash (repeating key as needed)
+FRAGMENT_LEN=${#FRAGMENT_HEX}
+KEY_LEN=${#KEY_HASH}
+ENCRYPTED=""
 
-# XOR encrypt
-encrypted_hex=$(xor_hex "$fragment_bytes" "$key_hash_hex")
+for ((i=0; i<FRAGMENT_LEN; i+=2)); do
+    # Get two hex chars from fragment (one byte)
+    FRAGMENT_BYTE="${FRAGMENT_HEX:$i:2}"
+    
+    # Get corresponding byte from key hash (wrap around if needed)
+    KEY_POS=$(( (i/2) % (KEY_LEN/2) ))
+    KEY_BYTE="${KEY_HASH:$((KEY_POS*2)):2}"
+    
+    # XOR the bytes
+    FRAGMENT_DEC=$((16#$FRAGMENT_BYTE))
+    KEY_DEC=$((16#$KEY_BYTE))
+    XOR_RESULT=$(($FRAGMENT_DEC ^ $KEY_DEC))
+    
+    # Convert back to hex
+    printf -v XOR_HEX "%02x" $XOR_RESULT
+    ENCRYPTED="${ENCRYPTED}${XOR_HEX}"
+done
 
-echo "Encrypted hex:"
-echo "$encrypted_hex"
+echo "Step 4 - XOR encrypted (hex): $ENCRYPTED"
+echo ""
+echo "=== Put this in Dockerfile ==="
+echo "LABEL quantum.encrypted.fragment=\"$ENCRYPTED\""
+echo ""
+
+# Test decryption
+echo "=== Testing Decryption Process ==="
+
+# Decrypt: XOR with key
+DECRYPTED=""
+ENCRYPTED_LEN=${#ENCRYPTED}
+
+for ((i=0; i<ENCRYPTED_LEN; i+=2)); do
+    ENCRYPTED_BYTE="${ENCRYPTED:$i:2}"
+    
+    KEY_POS=$(( (i/2) % (KEY_LEN/2) ))
+    KEY_BYTE="${KEY_HASH:$((KEY_POS*2)):2}"
+    
+    ENCRYPTED_DEC=$((16#$ENCRYPTED_BYTE))
+    KEY_DEC=$((16#$KEY_BYTE))
+    XOR_RESULT=$(($ENCRYPTED_DEC ^ $KEY_DEC))
+    
+    printf -v XOR_HEX "%02x" $XOR_RESULT
+    DECRYPTED="${DECRYPTED}${XOR_HEX}"
+done
+
+# Convert hex back to base64 string
+DECRYPTED_B64=$(echo -n "$DECRYPTED" | xxd -r -p)
+echo "After XOR decrypt: $DECRYPTED_B64"
+echo ""
+
+# Decode base64 to get final fragment
+DECRYPTED_TEXT=$(echo -n "$DECRYPTED_B64" | base64 -d)
+echo "After base64 decode:"
+echo "$DECRYPTED_TEXT"
+echo ""
+
+if [ "$DECRYPTED_TEXT" = "$FRAGMENT" ]; then
+    echo "✅ Two-layer encryption/decryption successful!"
+else
+    echo "❌ Decryption failed - mismatch"
+fi

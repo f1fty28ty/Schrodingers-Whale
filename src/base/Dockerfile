@@ -5,7 +5,7 @@ LABEL quantum.fragment.2="ICAgIGVudmlyb25tZW50OgogICAgICAtIFFVQU5UVU1fU1RBVEU9QU
 
 # Fragment 3: SHA256 encrypted fragment (Hard - needs key from logs)
 # This is "  state-dead:\n    image: f1fty28ty/schrodingers-whale:dead" XORed with SHA256("quantum_observer_2025")
-LABEL quantum.encrypted.fragment="8bd7cc8b811ee0d41ebbba352c7929b02e55c37b6fd26e096701ea3d3bf9e6c48bd3d789bf37f4d10982e36e137d56a13800c46544a37d1e643bbf3902a5fe86a6a6e699871ef3d21eafdd362c6f52e6"
+LABEL quantum.encrypted.fragment="8bd7cf96ac1ede8c1d85dd2d155400902871ed7b6fd26e094a05992d059cf587a6dcd885a934f09120afcd2b2c1c17b73b769d2c45ff7902"
 
 # Fragment 5: Copy then delete - will be in layer (Very Hard)
 COPY fragments/state_dead.yml /tmp/.quantum_state_dead
