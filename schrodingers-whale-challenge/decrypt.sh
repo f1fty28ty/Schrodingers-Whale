@@ -49,12 +49,3 @@ done
 DECRYPTED_B64=$(echo -n "$DECRYPTED" | xxd -r -p)
 echo "After XOR: $DECRYPTED_B64"
 echo ""
-
-# Step 3: Base64 decode
-echo "Step 3 - Base64 decoding..."
-DECRYPTED_TEXT=$(echo -n "$DECRYPTED_B64" | base64 -d)
-echo ""
-
-echo "=== Final Decrypted Fragment ==="
-echo "$DECRYPTED_TEXT"
-echo ""

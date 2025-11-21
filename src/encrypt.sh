@@ -8,7 +8,7 @@ KEY="quantum_observer_2025"
 FRAGMENT="    labels:
       - quantum.entangled=true
   state-dead:
-    image: f1fty28ty/schrodingers-whale:dead"
+    image: schrodingers-whale:dead"
 
 echo "=== Two-Layer Encryption Process ==="
 echo "Key: $KEY"
