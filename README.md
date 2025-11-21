@@ -303,9 +303,9 @@ By completing this challenge, students will:
 ## Walkthrough Documents
 
 Detailed walkthroughs and solutions are available in:
-- `SOLUTIONS.md` - Complete solutions including flag and compose file (**DO NOT share with students**)
-- `Fragment 5 Walkthrough.md` - Detailed guide for the hardest fragment
-- `Project Doc.md` - Full design document
+- `Documentation/solutions.md` - Complete solutions including flag and compose file (**DO NOT share with students**)
+- `Documentation/Fragment 5 Walkthrough.md` - Detailed guide for the hardest fragment
+- `Documentation/Project Doc.md` - Full design document
 
 These should NOT be shared with students until after completion.
 

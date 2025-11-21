@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   schrodingers-whale:
-    image: f1fty28ty/schrodingers-whale:latest
+    image: schrodingers-whale:latest
     container_name: schrodingers-whale
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -9,7 +9,7 @@ services:
       - "quantum.state=superposition"
       
   state-alive:
-    image: f1fty28ty/schrodingers-whale:alive
+    image: schrodingers-whale:alive
     environment:
       - QUANTUM_STATE=ALIVE
     profiles:
@@ -18,7 +18,7 @@ services:
       - quantum.entangled=true
       
   state-dead:
-    image: f1fty28ty/schrodingers-whale:dead
+    image: schrodingers-whale:dead
     environment:
       - QUANTUM_STATE=DEAD
     profiles:
