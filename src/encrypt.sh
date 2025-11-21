@@ -6,7 +6,9 @@ KEY="quantum_observer_2025"
 
 # Fragment to encrypt (the actual YAML we want to hide)
 FRAGMENT="    labels:
-      - quantum.entangled=true"
+      - quantum.entangled=true
+  state-dead:
+    image: f1fty28ty/schrodingers-whale:dead"
 
 echo "=== Two-Layer Encryption Process ==="
 echo "Key: $KEY"
