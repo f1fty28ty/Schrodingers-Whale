@@ -10,7 +10,7 @@ unauthorized quantum experiments. The complete system configuration was
 fragmented and hidden across multiple quantum observation planes to 
 prevent it from falling into the wrong hands.
 
-Your mission: Act as an external observer and reconstruct the complete 
+Your mission: Act as an external quantum_observer_2025 and reconstruct the complete 
 quantum state of the whale through careful, non-invasive observation 
 techniques. Each observation method collapses a different part of the 
 wave function, revealing fragments of the truth.

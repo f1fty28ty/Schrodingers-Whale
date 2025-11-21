@@ -8,9 +8,10 @@
 Start the quantum experiment:
 ```bash
 docker-compose up -d
+```
 
-#later this
-
+Later when you have the full Docker Compose run this:
+```bash
 docker-compose --profile collapsed up -d
 ```
 
@@ -30,7 +31,7 @@ The whale exists in quantum superposition. Your goal is to:
 - Do NOT enter the container (`docker exec` defeats the purpose)
 - All observations must be external
 - Multiple observation methods reveal different information
-- Combine all fragments to reconstruct reality
+- Combine all fragments into the Docker Compose to reconstruct reality
 
 ## Available Observation Methods
 
@@ -42,9 +43,9 @@ Docker provides several ways to externally observe containers without entering t
 - `docker ps` - List running containers
 
 ### Advanced Observations
-- `docker history <image>` - View image layer history (archaeological observation)
 - `docker save <image> -o file.tar` - Export image to tarball for analysis
 - `dive <image>` - Explore image layers interactively (recommended for finding hidden files)
+- `tar -xf <tar file>` - Expand a tarball file
 
 ### Installing dive (Image Layer Explorer)
 **macOS:**
@@ -79,9 +80,9 @@ See [dive releases](https://github.com/wagoodman/dive/releases) for pre-built bi
 - You'll need to combine information from multiple sources
 
 ## Decoding Base64
-If you find base64 encoded strings, decode them with:
-```bash
-echo "BASE64_STRING_HERE" | base64 -d
-```
+If you find base64 encoded strings, decode them with helper script base64Decode.sh
+
+## Decoding Encrypted string
+If you find a sha256 looking string use decryptEncrypted.sh
 
 Good luck, observer.
